@@ -16,8 +16,9 @@ ActiveRecord::Schema.define(:version => 20100812102627) do
     t.integer  "user_id"
     t.string   "hash"
     t.string   "path"
-    t.integer  "counter",    :default => 0
-    t.boolean  "deleted",    :default => false
+    t.integer  "counter",      :default => 0
+    t.boolean  "deleted",      :default => false
+    t.datetime "first_hit_on"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

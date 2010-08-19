@@ -28,7 +28,9 @@ class ShortLinksController < InheritedResources::Base
   
   def show
     @link = ShortLink.find_by_hash(params[:id])
-    @link.update_attribute(:counter, (@link.counter + 1))
+    @link.counter = (@link.counter + 1)
+    @link.first_hit_on = Time.now if @link.first_hit_on.blank?
+    @link.save
     @home_folder = @link.path
 
     if @link.blank?

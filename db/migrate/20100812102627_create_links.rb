@@ -6,7 +6,8 @@ class CreateLinks < ActiveRecord::Migration
       t.string :path
       t.integer :counter, :default => 0
       t.boolean :deleted, :default => false
-
+      
+      t.datetime :first_hit_on
       t.timestamps
     end
   end
