@@ -9,7 +9,7 @@
 		<% @users.each do |user| %>
 		<tr class="<%= cycle("alt-row","")%>">		
 			<td><%= user.login %></td>
-			<td><%= user.home_folder %></td>
+			<td><%= user.full_path %></td>
 			<td><%= user.is_admin? ? "Yes" : "No" %></td>			
 		<tr>			
 		<% end %>
