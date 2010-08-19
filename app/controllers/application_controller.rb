@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     if Byshbrowser::Application.config.action_dispatch.x_sendfile_header.blank? 
       send_file(user.full_path + "/"+  path)
     else
-      send_nginx(path)
+      send_nginx(path, user)
     end
   end
   
