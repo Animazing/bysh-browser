@@ -1,0 +1,48 @@
+<h1>ByshBrowsing in: <%= @path %></h1>
+<p>Current user: <%= @current_user.login%>, <%= link_to "logout", user_sessions_path(), :method => :delete %></p>
+
+<div class="files">
+	<table>
+		<thead>
+				<th>&nbsp;</th>
+				<th>Name</th>
+				<th>Size</th>
+				<th>Date</th>
+				<th>Actions</th>
+		</thead>
+		<tbody>
+	<% Dir.foreach(@path) do |e| %>
+	<% next if ["."].include?(e) %>
+	<tr class="<%= cycle("alt-row","")%>">
+		<td><% if File.directory?(@path + "/" + e) %><%= image_tag("folder.png")%><% else %><%= image_tag("document-binary.png") %><% end %></td>
+		<% if File.directory?(@path + "/" + e) %>
+			<td><%= link_to e, url_for(:controller => "folders", :action => "show", :path => [@path.gsub(@home_folder,""), e].join("/")) %></td>
+		<% else %>
+			<td><%= link_to e, url_for(:controller => "folders", :action => "create", :path => [@path.gsub(@home_folder,""), e].join("/"))%></td>
+
+		<% end %>
+		<td><%= number_to_human_size(File.size(@path + "/" + e).to_i) %></td>
+		<td><%= File.ctime(@path + "/" + e) %></td>
+		<td>
+			<% if @link.blank? %>
+				<% unless [".",".."].include?(e)%>
+					<%= link_to image_tag("document-zipper.png", :alt => "Zip & Download", :title => "Zip & Download"), "#zip-#{File.stat(@path + "/" + e).ino}", :rel => "facebox" %>
+					<% unless File.directory?(@path + "/" + e)%>
+						<%= link_to image_tag("document-share.png", :alt => "Share file"), short_links_path(:path => @path.gsub(@home_folder,"") + "/" + e, :format => "js"), :method => :post, :remote => true %>
+					<% end %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<div id="zip-<%= File.stat(@path + "/" + e).ino%>" style="display:none">
+		<h2>Zip options</h2>
+		<p>Use these functions only to zip small files. Feature for large folders / files will follow.</p>
+		<ul>
+			<li><%= link_to "Zip & Download", url_for(:controller => "folders", :action => "zip", :path => [@path.gsub(@home_folder,""), e].join("/")) %></li>
+			<li><%= link_to "Zip to background" %></li>
+		</ul>
+	</div>
+	<% end %>
+	</tbody>
+	</table>
+</div>

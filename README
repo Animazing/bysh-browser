@@ -1,0 +1,11 @@
+== BySHBrowser
+
+Small file-browser application with easy file sharing and zipping/unzipping features. Created for ByteSized-Hosting.com.
+
+=== Todo
+
+* Background zipping
+* Unzipping
+* Torrent creation
+* Rework the folder navigation
+* Patch up the security before deploying in production
