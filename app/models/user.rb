@@ -8,4 +8,7 @@ class User < ActiveRecord::Base
 	 validates_length_of :password, :minimum => 6, :on => :create
 	 validates_format_of :login, :with => /^[a-zA-Z][a-zA-Z0-9]+$/, :on => :create
 	 
+	 def full_path
+	   $PREFIX_PATH + self.home_folder
+   end
 end

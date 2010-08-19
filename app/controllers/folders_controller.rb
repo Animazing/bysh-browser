@@ -2,17 +2,17 @@ class FoldersController < ApplicationController
 
   def show
     if params[:path].blank?
-      @path = @current_user.home_folder
+      @path = @current_user.full_path
     else
-      @path = @current_user.home_folder + "/" + params[:path]
+      @path = @current_user.full_path + "/" + params[:path]
     end
-    @home_folder = @current_user.home_folder
+    @home_folder = @current_user.full_path
   end
   
   def create
     path = params[:path]
     if Byshbrowser::Application.config.action_dispatch.x_sendfile_header.blank? 
-      send_file(@current_user.home_folder + "/"+  path)
+      send_file(@current_user.full_path + "/"+  path)
     else
       response.headers['X-Accel-Redirect'] = "/xdownload/" + @current_user.home_folder + "/" + path
       response.headers['Content-Type'] = 'application/octet-stream'
@@ -26,7 +26,7 @@ class FoldersController < ApplicationController
 
     # Setup some variables
     @path = params[:path]
-    @working_path = @current_user.home_folder + "/" + @path
+    @working_path = @current_user.full_path + "/" + @path
     match = @working_path.match(/\/(\w+)$/)
     unless match.blank?
       @root_path = @working_path.match(/\/(\w+)$/)[0]
