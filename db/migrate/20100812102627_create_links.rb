@@ -8,6 +8,8 @@ class CreateLinks < ActiveRecord::Migration
       t.boolean :deleted, :default => false
       
       t.datetime :first_hit_on
+      t.datetime :expires_on 
+
       t.timestamps
     end
   end
