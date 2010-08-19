@@ -1,6 +1,5 @@
 <h1>ByshBrowsing in: <%= @path %></h1>
-<p>Current user: <%= @current_user.login%>, <%= link_to "logout", user_sessions_path(), :method => :delete %></p>
-
+<p><%= link_to "Manage short-links", short_links_path %></p>
 <div class="files">
 	<table>
 		<thead>
@@ -38,10 +37,9 @@
 	</tr>
 	<div id="zip-<%= File.stat(@path + "/" + e).ino%>" style="display:none">
 		<h2>Zip options</h2>
-		<p>Use these functions only to zip small files. Feature for large folders / files will follow.</p>
+		<p>More options will follow.</p>
 		<ul>
-			<li><%= link_to "Zip & Download", url_for(:controller => "folders", :action => "zip", :path => [@path.gsub(@home_folder,""), e].join("/")) %></li>
-			<li><%= link_to "Zip to background" %></li>
+			<li><%= link_to "Zip in background", url_for(:controller => "folders", :action => "zip", :path => [@path.gsub(@home_folder,""), e].join("/")) %></li>
 		</ul>
 	</div>
 	<% end %>

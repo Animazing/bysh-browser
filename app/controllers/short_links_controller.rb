@@ -2,9 +2,24 @@ class ShortLinksController < InheritedResources::Base
   skip_before_filter :require_user
   
   respond_to :js
-  
+
+  def destroy
+    @link = current_user.short_links.find(params[:id])
+    @link.deleted = true
+    if @link.save
+      flash[:notice] = "Link deleted"
+    else
+      flash[:notice] = "Deletion failed"
+    end
+    redirect_to short_links_path
+  end
+
+  def index
+    @links = current_user.short_links.where(:deleted => false)
+  end
+
   def create
-    hash = Digest::SHA1.hexdigest(params[:path] + current_user.id.to_s)
+    hash = Digest::MD5.hexdigest(params[:path] + current_user.id.to_s)
     @link = ShortLink.find_or_initialize_by_hash(hash)
     @link.path = params[:path]
     @link.user_id = current_user.id    
@@ -26,7 +41,7 @@ class ShortLinksController < InheritedResources::Base
         # secure browse at some point
         render :text => "Share is a folder."
       else
-        send_data(@link.path, @link.user)
+        send_wrapper(@link.path, @link.user)
       end
     else
       render :text => "File/Folder not found."

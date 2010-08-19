@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   
   private
   # file sending
-  def send_data(path, user = current_user)
+  def send_wrapper(path, user = current_user)
     if Byshbrowser::Application.config.action_dispatch.x_sendfile_header.blank? 
       send_file(user.full_path + "/"+  path)
     else

@@ -2,10 +2,23 @@
 
 Small file-browser application with easy file sharing and zipping/unzipping features. Created for ByteSized-Hosting.com.
 
+=== Milestone 1 - features
+
+* Browse folders
+* Download files
+* Zip files / folders in the background
+* Share files via unique urls (no login required)
+* Multiple user support
+
 === Todo
 
-* Background zipping
-* Unzipping
+* Redo routes
+* Cleanup rest
+* Zip-file streaming
+* Unzipping / Unraring
 * Torrent creation
+* Text-file viewer
+* File upload
+* File / Folder abstraction
 * Rework the folder navigation
 * Patch up the security before deploying in production

@@ -15,5 +15,5 @@ Byshbrowser::Application.routes.draw do
   resource :folders
   resources :short_links
   
- root :to => "user_sessions#new"
+ root :to => "folders#show"
 end

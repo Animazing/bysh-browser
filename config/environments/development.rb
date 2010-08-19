@@ -19,6 +19,7 @@ Byshbrowser::Application.configure do
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
-  
+
+  config.allow_concurrency = true
   $PREFIX_PATH = ""
 end

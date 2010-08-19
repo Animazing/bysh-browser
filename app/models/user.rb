@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 	 acts_as_authentic do |c|
 	   c.ignore_blank_passwords = true
    end
+   
+   has_many :short_links
 
 	 validates_presence_of :login, :home_folder
 	 validates_confirmation_of :password_confirmation, :on => :create, :message => "should match confirmation"
