@@ -13,6 +13,7 @@
 		<tbody>
 	<% Dir.foreach(@path) do |e| %>
 	<% next if ["."].include?(e) %>
+	<% next if e[0].chr == "." unless e == ".."%>
 	<tr class="<%= cycle("alt-row","")%>">
 		<td><% if File.directory?(@path + "/" + e) %><%= image_tag("folder.png")%><% else %><%= image_tag("document-binary.png") %><% end %></td>
 		<% if File.directory?(@path + "/" + e) %>
