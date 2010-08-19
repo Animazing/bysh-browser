@@ -19,13 +19,14 @@ class ShortLinksController < InheritedResources::Base
     if @link.blank?
       render :text => "Link not found."
     end
-    looking_for = @link.user.home_folder + "/" + @link.path
+  
+    looking_for = @link.user.full_path + "/" + @link.path
     if File.exists?(looking_for)
       if File.directory?(looking_for)
         # secure browse at some point
         render :text => "Share is a folder."
       else
-        send_file(looking_for)
+        send_data(@link.path, @link.user)
       end
     else
       render :text => "File/Folder not found."

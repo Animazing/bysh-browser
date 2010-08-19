@@ -11,14 +11,7 @@ class FoldersController < ApplicationController
   
   def create
     path = params[:path]
-    if Byshbrowser::Application.config.action_dispatch.x_sendfile_header.blank? 
-      send_file(@current_user.full_path + "/"+  path)
-    else
-      response.headers['X-Accel-Redirect'] = "/xdownload/" + @current_user.home_folder + "/" + path
-      response.headers['Content-Type'] = 'application/octet-stream'
-      response.headers['Content-Disposition'] = "attachment; filename=#{File.basename(path)}"
-      render :nothing => true
-    end
+    send_data(path)
   end
   
   def zip
@@ -33,8 +26,9 @@ class FoldersController < ApplicationController
     else
       @root_path = @working_path
     end
-    
-    zip_path = "/tmp/#{File.basename(@path)}.zip"
+
+    zip_name = "#{File.basename(@path)}.zip"
+    zip_path = @current_user.full_path + "/" + zip_name
     
     # What ever happens we want to make sure we delete any temp zipfiles we might have
     begin
@@ -45,7 +39,7 @@ class FoldersController < ApplicationController
         Zip::ZipFile.open(zip_path, Zip::ZipFile::CREATE) do |zipfile|
           @zipfile = zipfile
           # start in the current_folder
-          pack_dir(Dir.pwd, true)
+          pack_dir(Dir.pwd)
         end
       else
         # Zipping file
@@ -56,7 +50,7 @@ class FoldersController < ApplicationController
         end
       end
       # send the file to the browser
-      send_file(zip_path)
+      send_data(zip_name)
     ensure
       # clean up the tmp file
       if File.exists?(zip_path)
