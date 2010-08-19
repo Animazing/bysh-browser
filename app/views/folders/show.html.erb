@@ -11,7 +11,7 @@
 				<th>Actions</th>
 		</thead>
 		<tbody>
-	<% Dir.entries(@path).sort {|x,y| (File.directory?(y) ? 1 : 0) <=> (File.directory?(x) ? 1 : 0)   }.each do |e| %>
+	<% Dir.entries(@path).sort {|x,y| (File.directory?(@path + "/" +y) ? 1 : 0) <=> (File.directory?(@path + "/" +x) ? 1 : 0)}.each do |e| %>
 	<%# Dir.foreach(@path) do |e| %>
 	<% next if ["."].include?(e) %>
 	<% next if e[0].chr == "." unless e == ".."%>
