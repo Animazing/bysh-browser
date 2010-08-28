@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# Very quick and dirty way to add users
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require File.expand_path('../../config/boot',  __FILE__)
+require File.expand_path('../../config/environment',  __FILE__)
+
+
+username = ARGV[0]
+password = ARGV[1]
+home_folder = ARGV[2]
+
+if username.blank? || password.blank? || home_folder.blank?
+  puts "Usage:"
+  puts "script/add_user username password home_folder"
+end
+
+user = User.new(:login => username, :password => password, :password_confirmation => password, :home_folder => home_folder)
+if user.save
+  puts "#{user.login} created."
+else
+  abort("Failure:\n " + user.errors.full_messages.join("\n"))
+end

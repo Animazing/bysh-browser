@@ -1,8 +1,6 @@
 source 'http://rubygems.org'
-gem 'zip'
 gem 'inherited_resources'
 gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
-gem 'mysql', '2.8.1'
 gem 'rails', '3.0.0.rc'
 
 # Bundle edge Rails instead:
